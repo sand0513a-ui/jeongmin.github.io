@@ -1,0 +1,435 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>홍길동 / 연구원</title>
+  <meta name="description" content="개인 포트폴리오 페이지">
+  <style>
+    /* ==================== 기본 설정 ==================== */
+    :root {
+      --primary: #2563eb;
+      --bg: #fff;
+      --text: #111;
+      --muted: #666;
+      --border: #e5e7eb;
+      --max-width: 1100px;
+    }
+    
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans KR", sans-serif;
+      line-height: 1.6;
+      color: var(--text);
+      background: #f9fafb;
+      padding: 20px;
+    }
+
+    /* ==================== 메인 컨테이너 ==================== */
+    .container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      background: var(--bg);
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    }
+
+    /* ==================== 헤더 영역 ==================== */
+    header {
+      display: flex;
+      gap: 24px;
+      align-items: flex-start;
+      padding-bottom: 24px;
+      border-bottom: 2px solid var(--border);
+    }
+
+    .profile-img {
+      width: 140px;
+      height: 140px;
+      border-radius: 12px;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+
+    .header-info {
+      flex: 1;
+    }
+
+    h1 {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      font-size: 15px;
+      margin-bottom: 12px;
+    }
+
+    .contact-info {
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .contact-info a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    /* ==================== 네비게이션 ==================== */
+    nav {
+      margin: 24px 0;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      padding: 8px 16px;
+      background: #f3f4f6;
+      border-radius: 8px;
+      text-decoration: none;
+      color: var(--text);
+      font-size: 14px;
+      transition: all 0.2s;
+    }
+
+    nav a:hover {
+      background: var(--primary);
+      color: white;
+    }
+
+    /* ==================== 메인 콘텐츠 영역 ==================== */
+    .content {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 32px;
+      margin-top: 32px;
+    }
+
+    main {
+      min-height: 400px;
+    }
+
+    section {
+      margin-bottom: 32px;
+    }
+
+    .section-title {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--primary);
+    }
+
+    /* ==================== 사이드바 ==================== */
+    aside {
+      background: #f9fafb;
+      padding: 20px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      height: fit-content;
+    }
+
+    aside section {
+      margin-bottom: 24px;
+    }
+
+    aside .section-title {
+      font-size: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* ==================== 리스트 스타일 ==================== */
+    ul.publications {
+      list-style: none;
+      padding: 0;
+    }
+
+    ul.publications li {
+      margin-bottom: 16px;
+      padding-left: 20px;
+      position: relative;
+    }
+
+    ul.publications li:before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      color: var(--primary);
+      font-weight: bold;
+    }
+
+    .pub-link {
+      color: var(--primary);
+      text-decoration: none;
+      margin-left: 8px;
+      font-size: 14px;
+    }
+
+    /* ==================== 프로젝트 섹션 ==================== */
+    .project {
+      margin-bottom: 24px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .project:last-child {
+      border-bottom: none;
+    }
+
+    .project-title {
+      font-weight: 700;
+      font-size: 16px;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+
+    .project-desc {
+      font-size: 14px;
+      color: var(--muted);
+      margin-bottom: 12px;
+      line-height: 1.6;
+    }
+
+    /* 이미지 추가 방법: <img src="이미지경로.jpg" alt="설명" class="project-img"> */
+    .project-img {
+      width: 100%;
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      margin-top: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    /* ==================== 푸터 ==================== */
+    footer {
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 1px dashed var(--border);
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    /* ==================== 반응형 디자인 ==================== */
+    @media (max-width: 900px) {
+      .content {
+        grid-template-columns: 1fr;
+      }
+      
+      header {
+        flex-direction: column;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        padding: 24px;
+      }
+      
+      h1 {
+        font-size: 22px;
+      }
+      
+      nav {
+        flex-direction: column;
+      }
+      
+      nav a {
+        width: 100%;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    
+    <!-- ==================== 헤더: 이름과 기본 정보 ==================== -->
+    <header>
+      <!-- 프로필 이미지 변경: src="your-photo.jpg" -->
+      <img class="profile-img" src="https://via.placeholder.com/140" alt="프로필 사진">
+      
+      <div class="header-info">
+        <!-- 이름 변경 -->
+        <h1>홍길동 <span style="font-size:16px; color:#666;">(학부 연구생)</span></h1>
+        
+        <!-- 소속/전공 변경 -->
+        <div class="subtitle">
+          컴퓨터공학과<br>
+          한국교통대학교, 충주
+        </div>
+        
+        <!-- 이메일 변경 -->
+        <div class="contact-info">
+          📧 <a href="mailto:your.email@example.com">your.email@example.com</a>
+        </div>
+      </div>
+    </header>
+
+    <!-- ==================== 네비게이션 메뉴 ==================== -->
+    <nav>
+      <a href="#about">소개</a>
+      <a href="#research">연구 분야</a>
+      <a href="#publications">논문</a>
+      <a href="#projects">프로젝트</a>
+      <a href="#activities">활동</a>
+      <a href="#contact">연락처</a>
+    </nav>
+
+    <!-- ==================== 메인 콘텐츠 ==================== -->
+    <div class="content">
+      <main>
+        
+        <!-- 소개 -->
+        <section id="about">
+          <div class="section-title">소개</div>
+          <p>
+            <!-- 자기소개 내용 수정 -->
+            저는 한국교통대학교에서 컴퓨터공학을 전공하고 있는 학부 연구생입니다. 
+            이미지 처리와 정보 보안 분야에 관심을 가지고 연구를 진행하고 있습니다.
+          </p>
+          <p style="margin-top:12px; font-size:14px; color:#666;">
+            <!-- 소속 연구실 정보 수정 -->
+            📍 EVALAB (Embedded Vision & AI Lab), KNUT
+          </p>
+        </section>
+
+        <!-- 연구 분야 -->
+        <section id="research">
+          <div class="section-title">연구 분야</div>
+          <p style="color:#666; font-size:15px;">
+            <!-- 관심 연구 분야 수정 -->
+            기계 학습 · 디지털 신호 및 비디오 처리 · 정보 보안 · 임베디드 시스템 설계
+          </p>
+        </section>
+
+        <!-- 논문 -->
+        <section id="publications">
+          <div class="section-title">학술 논문</div>
+          
+          <!-- 논문 추가/수정: 아래 형식으로 복사하여 사용 -->
+          <ul class="publications">
+            <li>
+              <strong>논문 제목 1</strong><br>
+              저자명, 저자명 (2026)<br>
+              <em>학술지명</em>
+              <a href="#" class="pub-link">[PDF]</a>
+              <a href="#" class="pub-link">[DOI]</a>
+            </li>
+            
+            <li>
+              <strong>논문 제목 2</strong><br>
+              저자명, 저자명 (2025)<br>
+              <em>학술지명</em>
+              <a href="#" class="pub-link">[PDF]</a>
+            </li>
+          </ul>
+        </section>
+
+        <!-- 프로젝트 -->
+        <section id="projects">
+          <div class="section-title">프로젝트</div>
+          
+          <!-- 프로젝트 1 -->
+          <div class="project">
+            <div class="project-title">프로젝트 제목 1</div>
+            <div class="project-desc">
+              프로젝트에 대한 설명을 작성합니다. 
+              어떤 기술을 사용했고, 어떤 결과를 얻었는지 간단히 설명합니다.
+            </div>
+            <!-- 이미지 추가 방법: 아래 주석 해제하고 이미지 경로 입력 -->
+            <!-- <img src="project1.jpg" alt="프로젝트 1" class="project-img"> -->
+          </div>
+
+          <!-- 프로젝트 2 -->
+          <div class="project">
+            <div class="project-title">프로젝트 제목 2</div>
+            <div class="project-desc">
+              두 번째 프로젝트 설명입니다.
+            </div>
+            <!-- <img src="project2.jpg" alt="프로젝트 2" class="project-img"> -->
+          </div>
+
+          <!-- 프로젝트 3: 필요시 위 블록을 복사하여 추가 -->
+          
+        </section>
+
+        <!-- 활동 -->
+        <section id="activities">
+          <div class="section-title">활동 및 경험</div>
+          <p style="font-size:14px; color:#666;">
+            <!-- 활동 내용 수정 -->
+            • OVERFLOW 학생 동아리 회장 (2025)<br>
+            • 학부 연구 조교 (2025)<br>
+            • 신호 및 시스템 수업 조교 (2025)
+          </p>
+        </section>
+
+      </main>
+
+      <!-- ==================== 사이드바 ==================== -->
+      <aside>
+        
+        <!-- 소식 -->
+        <section>
+          <div class="section-title">소식</div>
+          <p style="font-size:13px; color:#666;">
+            <!-- 최근 소식 수정 -->
+            우리 연구실은 한국교통대학교 W18동 314호에 위치하고 있습니다.
+            이미지 처리 분야의 연구와 교육에 힘쓰고 있습니다.
+          </p>
+        </section>
+
+        <!-- 연락처 -->
+        <section id="contact">
+          <div class="section-title">연락처</div>
+          <p style="font-size:13px; color:#666;">
+            <!-- 연락처 정보 수정 -->
+            📧 <a href="mailto:your.email@example.com">your.email@example.com</a><br>
+            🏢 한국교통대학교 W18동 314호<br>
+            📅 <a href="#">일정 예약</a>
+          </p>
+        </section>
+
+        <!-- 빠른 링크 -->
+        <section>
+          <div class="section-title">바로가기</div>
+          <p style="font-size:13px;">
+            <!-- 링크 수정 -->
+            <a href="#publications" style="color:#2563eb;">논문</a> · 
+            <a href="#projects" style="color:#2563eb;">프로젝트</a> · 
+            <a href="#activities" style="color:#2563eb;">활동</a>
+          </p>
+        </section>
+        
+      </aside>
+    </div>
+
+    <!-- ==================== 푸터 ==================== -->
+    <footer>
+      <!-- 이름과 날짜 수정 -->
+      © 2026 홍길동 · 최종 수정: <span id="last-update">2026-01-15</span>
+    </footer>
+    
+  </div>
+
+  <!-- ==================== 스크립트: 부드러운 스크롤 ==================== -->
+  <script>
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+      link.addEventListener('click', e => {
+        const target = document.querySelector(link.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+  </script>
+</body>
+</html>
