@@ -16,7 +16,20 @@
       --text: #111;
       --muted: #666;
       --border: #e5e7eb;
+      --card-bg: #f9fafb;
       --max-width: 1100px;
+      --shadow: rgba(0,0,0,0.05);
+    }
+
+    /* 다크모드 변수 */
+    [data-theme="dark"] {
+      --primary: #3b82f6;
+      --bg: #1a1a1a;
+      --text: #e5e5e5;
+      --muted: #a3a3a3;
+      --border: #333;
+      --card-bg: #262626;
+      --shadow: rgba(0,0,0,0.3);
     }
     
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -25,8 +38,38 @@
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans KR", sans-serif;
       line-height: 1.6;
       color: var(--text);
-      background: #f9fafb;
+      background: var(--card-bg);
       padding: 20px;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    /* ==================== 다크모드 토글 버튼 ==================== */
+    .theme-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+      background: var(--card-bg);
+      border: 2px solid var(--border);
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 24px;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 8px var(--shadow);
+    }
+
+    .theme-toggle:hover {
+      transform: scale(1.1);
+      border-color: var(--primary);
+    }
+
+    .theme-toggle:active {
+      transform: scale(0.95);
     }
 
     /* ==================== 메인 컨테이너 ==================== */
@@ -36,7 +79,8 @@
       background: var(--bg);
       padding: 40px;
       border-radius: 12px;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+      box-shadow: 0 4px 6px var(--shadow);
+      transition: background-color 0.3s ease;
     }
 
     /* ==================== 헤더 영역 ==================== */
@@ -54,16 +98,23 @@
       border-radius: 12px;
       object-fit: cover;
       flex-shrink: 0;
+      transition: transform 0.3s ease;
+    }
+
+    .profile-img:hover {
+      transform: scale(1.05);
     }
 
     .header-info {
       flex: 1;
+      min-width: 0;
     }
 
     h1 {
       font-size: 28px;
       font-weight: 700;
       margin-bottom: 8px;
+      word-wrap: break-word;
     }
 
     .subtitle {
@@ -75,11 +126,17 @@
     .contact-info {
       font-size: 14px;
       color: var(--muted);
+      word-break: break-all;
     }
 
     .contact-info a {
       color: var(--primary);
       text-decoration: none;
+      transition: opacity 0.2s ease;
+    }
+
+    .contact-info a:hover {
+      opacity: 0.7;
     }
 
     /* ==================== 네비게이션 ==================== */
@@ -92,17 +149,19 @@
 
     nav a {
       padding: 8px 16px;
-      background: #f3f4f6;
+      background: var(--card-bg);
       border-radius: 8px;
       text-decoration: none;
       color: var(--text);
       font-size: 14px;
       transition: all 0.2s;
+      border: 1px solid transparent;
     }
 
     nav a:hover {
       background: var(--primary);
       color: white;
+      transform: translateY(-2px);
     }
 
     /* ==================== 메인 콘텐츠 영역 ==================== */
@@ -115,6 +174,7 @@
 
     main {
       min-height: 400px;
+      min-width: 0;
     }
 
     section {
@@ -131,7 +191,7 @@
 
     /* ==================== 사이드바 ==================== */
     aside {
-      background: #f9fafb;
+      background: var(--card-bg);
       padding: 20px;
       border-radius: 10px;
       border: 1px solid var(--border);
@@ -147,6 +207,40 @@
       border-bottom: 1px solid var(--border);
     }
 
+    /* ==================== SNS 링크 섹션 ==================== */
+    .social-links {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .social-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 14px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      text-decoration: none;
+      color: var(--text);
+      font-size: 13px;
+      transition: all 0.2s ease;
+    }
+
+    .social-link:hover {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+
+    .social-link svg {
+      width: 18px;
+      height: 18px;
+      fill: currentColor;
+    }
+
     /* ==================== 리스트 스타일 ==================== */
     ul.publications {
       list-style: none;
@@ -157,6 +251,7 @@
       margin-bottom: 16px;
       padding-left: 20px;
       position: relative;
+      word-wrap: break-word;
     }
 
     ul.publications li:before {
@@ -172,6 +267,11 @@
       text-decoration: none;
       margin-left: 8px;
       font-size: 14px;
+      transition: opacity 0.2s ease;
+    }
+
+    .pub-link:hover {
+      opacity: 0.7;
     }
 
     /* ==================== 프로젝트 섹션 ==================== */
@@ -190,23 +290,25 @@
       font-size: 16px;
       margin-bottom: 8px;
       color: var(--text);
+      word-wrap: break-word;
     }
 
     .project-desc {
       font-size: 14px;
       color: var(--muted);
       margin-bottom: 12px;
-      line-height: 1.6;
+      line-height: 1.8;
+      white-space: pre-line;
+      word-wrap: break-word;
     }
 
-    /* 이미지 추가 방법: <img src="이미지경로.jpg" alt="설명" class="project-img"> */
     .project-img {
       width: 100%;
       max-width: 100%;
       height: auto;
       border-radius: 8px;
       margin-top: 12px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      box-shadow: 0 2px 8px var(--shadow);
     }
 
     /* ==================== 푸터 ==================== */
@@ -220,6 +322,8 @@
     }
 
     /* ==================== 반응형 디자인 ==================== */
+    
+    /* 태블릿 크기 */
     @media (max-width: 900px) {
       .content {
         grid-template-columns: 1fr;
@@ -227,37 +331,155 @@
       
       header {
         flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+      
+      .profile-img {
+        width: 120px;
+        height: 120px;
       }
     }
 
+    /* 모바일 크기 */
     @media (max-width: 600px) {
+      body {
+        padding: 10px;
+      }
+      
       .container {
-        padding: 24px;
+        padding: 20px;
+        border-radius: 8px;
+      }
+
+      .theme-toggle {
+        top: 10px;
+        right: 10px;
+        width: 45px;
+        height: 45px;
+        font-size: 20px;
+      }
+      
+      header {
+        gap: 16px;
+        padding-bottom: 20px;
+      }
+      
+      .profile-img {
+        width: 100px;
+        height: 100px;
       }
       
       h1 {
-        font-size: 22px;
+        font-size: 20px;
+      }
+      
+      h1 span {
+        font-size: 14px !important;
+      }
+      
+      .subtitle {
+        font-size: 14px;
+      }
+      
+      .contact-info {
+        font-size: 13px;
       }
       
       nav {
-        flex-direction: column;
+        gap: 8px;
       }
       
       nav a {
-        width: 100%;
+        flex: 1 1 calc(50% - 4px);
         text-align: center;
+        padding: 10px 12px;
+        font-size: 13px;
+      }
+      
+      .content {
+        gap: 24px;
+        margin-top: 24px;
+      }
+      
+      .section-title {
+        font-size: 18px;
+      }
+      
+      aside {
+        padding: 16px;
+      }
+      
+      aside .section-title {
+        font-size: 15px;
+      }
+      
+      .project-desc {
+        font-size: 13px;
+        line-height: 1.7;
+      }
+
+      .social-links {
+        gap: 8px;
+      }
+
+      .social-link {
+        flex: 1 1 calc(50% - 4px);
+        justify-content: center;
+        font-size: 12px;
+      }
+    }
+
+    /* 매우 작은 모바일 */
+    @media (max-width: 400px) {
+      .container {
+        padding: 16px;
+      }
+      
+      h1 {
+        font-size: 18px;
+      }
+      
+      .profile-img {
+        width: 90px;
+        height: 90px;
+      }
+      
+      nav a {
+        flex: 1 1 100%;
+      }
+      
+      .section-title {
+        font-size: 16px;
+      }
+      
+      .project-title {
+        font-size: 15px;
+      }
+      
+      .project-desc {
+        font-size: 12px;
+      }
+
+      .social-link {
+        flex: 1 1 100%;
       }
     }
   </style>
 </head>
 <body>
+  <!-- 다크모드 토글 버튼 -->
+  <button class="theme-toggle" id="themeToggle" aria-label="다크모드 토글">
+    <span id="themeIcon">🌙</span>
+  </button>
+
   <div class="container">
     
     <header>
       <img class="profile-img" src="parkjeongmin_face.jpg" alt="프로필 사진">
       
       <div class="header-info">
-        <h1>박정민 <span style="font-size:16px; color:#666;">(NULL)</span></h1>
+        <h1>박정민 <span style="font-size:16px; color:var(--muted);">(NULL)</span></h1>
         
         <div class="subtitle">
           컴퓨터공학과<br>
@@ -286,17 +508,17 @@
           <div class="section-title">소개</div>
           <p>
             저는 한국교통대학교에서 컴퓨터공학을 전공하고 있는 박정민입니다. 
-           혼자서 작업을 하거나 공모전 활동을 주로 합니다.
+            혼자서 작업을 하거나 공모전 활동을 주로 합니다.
           </p>
           
-          <p style="margin-top:12px; font-size:14px; color:#666;">
+          <p style="margin-top:12px; font-size:14px; color:var(--muted);">
             📍 EVALAB (Embedded Vision & AI Lab), KNUT
           </p>
         </section>
 
         <section id="research">
           <div class="section-title">연구 분야</div>
-          <p style="color:#666; font-size:15px;">
+          <p style="color:var(--muted); font-size:15px;">
             기계 학습 · 디지털 신호 및 비디오 처리 · 정보 보안 · 임베디드 시스템 설계
           </p>
         </section>
@@ -312,57 +534,55 @@
               <a href="#" class="pub-link">[PDF]</a>
               <a href="#" class="pub-link">[DOI]</a>
             </li>
-            
           </ul>
         </section>
 
         <section id="projects">
           <div class="section-title">프로젝트</div>
           
-          <div class="project" , id="projects_1">
+          <div class="project" id="projects_1">
             <div class="project-title">Student Challenge Team 학식모야 창업 프로젝트 진행</div>
-            <div class="project-desc">
-            활동 : 2025.09.29. ~ 2025.12.31. <br>
-             ㅤ- 대학별 파편화된 학식 정보를 통합하고, 실사용자 중심의 객관적 맛 평가를 제공하는 웹 플랫폼 개발 <br>
+            <div class="project-desc">활동 : 2025.09.29. ~ 2025.12.31.
 
-              • 사용 기술 및 환경
-              ㅤBackend: PHP (Apache 서버 환경) <br>
-              ㅤFrontend: HTML5, CSS3, JavaScript (반응형 UI/UX 구현) <br>
-              ㅤDatabase: MySQL (관계형 DB 설계 및 데이터 무결성 확보) <br>
-              ㅤSecurity: MD5 해시 함수를 활용한 사용자 비밀번호 암호화 <br>
-              
-              • 주요 성과 및 결과<br>
-              ㅤ데이터 구축: 팀원들이 직접 여러 대학을 방문하여 세밀한 현장 실사 및 맛 평가 데이터 수집 <br>
-              ㅤ시스템 구현: 실시간 식단 업데이트, 익명 토론 게시판, 맛 지표 기반 랭킹 시스템 및 관리자 페이지 구축 <br>
-              ㅤ평가 체계: 중복 평가 제한 및 평균 점수 산출 방식을 통해 정보의 신뢰성 확보 <br>     
-              ㅤ최종 성과: 3개월간의 프로젝트를 통해 완성도 100%의 웹 플랫폼 프로토타입 개발 완료 <br>
-            </div>
-            </div>
+• 프로젝트 개요
+- 대학별 파편화된 학식 정보를 통합하고, 실사용자 중심의 객관적 맛 평가를 제공하는 웹 플랫폼 개발
+
+• 사용 기술 및 환경
+- Backend: PHP (Apache 서버 환경)
+- Frontend: HTML5, CSS3, JavaScript (반응형 UI/UX 구현)
+- Database: MySQL (관계형 DB 설계 및 데이터 무결성 확보)
+- Security: MD5 해시 함수를 활용한 사용자 비밀번호 암호화
+
+• 주요 성과 및 결과
+- 데이터 구축: 팀원들이 직접 여러 대학을 방문하여 세밀한 현장 실사 및 맛 평가 데이터 수집
+- 시스템 구현: 실시간 식단 업데이트, 익명 토론 게시판, 맛 지표 기반 랭킹 시스템 및 관리자 페이지 구축
+- 평가 체계: 중복 평가 제한 및 평균 점수 산출 방식을 통해 정보의 신뢰성 확보
+- 최종 성과: 3개월간의 프로젝트를 통해 완성도 100%의 웹 플랫폼 프로토타입 개발 완료
+
+• 내가 주요로 한 것
+- 팀원 역할 배치: 팀원들의 역할 구체화 및 작업분담
+- 작업총괄: 서류작업 진행 및 도움</div>
+          </div>
           
           <div class="project">
             <div class="project-title">프로젝트 제목 1</div>
-            <div class="project-desc">
-             프로젝트에 대한 설명을 작성합니다. 
-              어떤 기술을 사용했고, 어떤 결과를 얻었는지 간단히 설명합니다.
-              
-            </div>
-            </div>
+            <div class="project-desc">프로젝트에 대한 설명을 작성합니다. 
+어떤 기술을 사용했고, 어떤 결과를 얻었는지 간단히 설명합니다.</div>
+          </div>
 
           <div class="project">
             <div class="project-title">프로젝트 제목 2</div>
-            <div class="project-desc">
-              두 번째 프로젝트 설명입니다.
-            </div>
-            </div>
+            <div class="project-desc">두 번째 프로젝트 설명입니다.</div>
+          </div>
 
-          </section>
+        </section>
 
         <section id="activities">
           <div class="section-title">활동 및 경험</div>
-          <p style="font-size:14px; color:#666;">
-            • SCT(Student Challenge Team) 창업동아리 대표 <a href="#projects_1">(2025)</a> <br>
-            • 컴퓨터공학부 연구 일원 <a href="https://chipeval.github.io/homepage/">(2025)</a> <br>
-            • OVERFLOW 학생 동아리 부원<a href="https://github.com/KNUT-2025/">(2025)</a> <br>
+          <p style="font-size:14px; color:var(--muted);">
+            • SCT(Student Challenge Team) 창업동아리 대표 <a href="#projects_1" style="color:var(--primary);">(2025)</a><br>
+            • 컴퓨터공학부 연구 일원 <a href="https://chipeval.github.io/homepage/" style="color:var(--primary);">(2025)</a><br>
+            • OVERFLOW 학생 동아리 부원 <a href="https://github.com/KNUT-2025/">(2025)</a>
           </p>
         </section>
 
@@ -372,27 +592,44 @@
         
         <section>
           <div class="section-title">소식</div>
-          <p style="font-size:13px; color:#666;">
-            우리 연구실은 한국교통대학교 W18동 314호에 위치하고 있습니다.
-            이미지 처리 분야의 연구와 교육에 힘쓰고 있습니다.
+          <p style="font-size:13px; color:var(--muted);">
+           2026-01-28 국립경국대학교 고령친화 아이디어 공모전 진행중(개인)
           </p>
+        </section>
+
+        <section>
+          <div class="section-title">링크</div>
+          <div class="social-links">
+            <a href="https://blog.naver.com/sand200505" class="social-link" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M16.273 12.845 7.376 0H0v24h7.726V11.156L16.624 24H24V0h-7.727v12.845z"/>
+              </svg>
+              블로그
+            </a>
+            <a href="https://www.instagram.com/life_diary_20050513?igsh=MTJ6anlwMTFwNWRhdw==" class="social-link" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/>
+              </svg>
+              Instagram
+            </a>
+          </div>
         </section>
 
         <section id="contact">
           <div class="section-title">연락처</div>
-          <p style="font-size:13px; color:#666;">
-            📧 <a href="mailto:sand2005.05.13im@gmail.com">sand2005.05.13im@gmail.com</a><br>
+          <p style="font-size:13px; color:var(--muted);">
+            📧 <a href="mailto:sand2005.05.13im@gmail.com" style="color:var(--primary);">sand2005.05.13im@gmail.com</a><br>
             🏢 한국교통대학교 W18동 314호<br>
-            📅 <a href="#">일정 예약</a>
+            📅 <a href="#" style="color:var(--primary);">일정 예약</a>
           </p>
         </section>
 
         <section>
           <div class="section-title">바로가기</div>
           <p style="font-size:13px;">
-            <a href="#publications" style="color:#2563eb;">논문</a> · 
-            <a href="#projects" style="color:#2563eb;">프로젝트</a> · 
-            <a href="#activities" style="color:#2563eb;">활동</a>
+            <a href="#publications" style="color:var(--primary);">논문</a> · 
+            <a href="#projects" style="color:var(--primary);">프로젝트</a> · 
+            <a href="#activities" style="color:var(--primary);">활동</a>
           </p>
         </section>
         
@@ -400,12 +637,13 @@
     </div>
 
     <footer>
-      © 2026 박정민 · 최종 수정: <span id="last-update">2026-01-16</span>
+      © 2026 박정민 · 최종 수정: <span id="last-update">2026-01-28</span>
     </footer>
     
   </div>
 
   <script>
+    // 부드러운 스크롤
     document.querySelectorAll('a[href^="#"]').forEach(link => {
       link.addEventListener('click', e => {
         const target = document.querySelector(link.getAttribute('href'));
@@ -414,6 +652,26 @@
           target.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
       });
+    });
+
+    // 다크모드 토글 기능
+    const themeToggle = document.getElementById('themeToggle');
+    const themeIcon = document.getElementById('themeIcon');
+    const html = document.documentElement;
+
+    // 로컬 스토리지에서 테마 불러오기
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    html.setAttribute('data-theme', savedTheme);
+    themeIcon.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+
+    // 테마 토글 이벤트
+    themeToggle.addEventListener('click', () => {
+      const currentTheme = html.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      
+      html.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+      themeIcon.textContent = newTheme === 'dark' ? '☀️' : '🌙';
     });
   </script>
 </body>
